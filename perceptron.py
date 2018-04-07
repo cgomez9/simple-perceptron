@@ -24,6 +24,8 @@ class Perceptron:
                         np.add(self.weigthVectors, trueXexample, out=self.weigthVectors, casting="unsafe")
                 if (previousWeigthVector == self.weigthVectors).all():
                     break
+            self.plotExamples()
+            self.plotPartialResult()
         else:
             print("No features provided.")
 
