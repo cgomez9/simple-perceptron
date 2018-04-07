@@ -4,7 +4,6 @@ import csv
 from perceptron import Perceptron
 
 inputFile = sys.argv[1]
-outputFile = sys.argv[2]
 features = []
 
 with open(inputFile, 'r') as csvfile:
