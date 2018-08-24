@@ -3,13 +3,14 @@ import csv
 
 from perceptron import Perceptron
 
-inputFile = sys.argv[1]
+input_file = sys.argv[1]
+output_file = sys.argv[2]
 features = []
 
-with open(inputFile, 'r') as csvfile:
+with open(input_file, 'r') as csvfile:
     spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
     for row in spamreader:
         features += row
 
-perceptron = Perceptron()
+perceptron = Perceptron(output_file)
 perceptron.train(features)
