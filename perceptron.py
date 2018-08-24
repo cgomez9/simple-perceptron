@@ -4,50 +4,51 @@ import matplotlib.pyplot as plt
 
 class Perceptron:
     def __init__(self):
-        self.weigth_vectors = np.array([0,0,0])
-        self.example_vector = []
-        self.true_labels = []
+        self.weigthVectors = np.array([0,0,0])
+        self.exampleVector = []
+        self.trueLabels = []
 
     def train(self,examples):
         if len(examples) > 0:
             for example in examples:
                 features = example.split(',')
-                self.example_vector.append((1,float(features[0]),float(features[1])))
-                self.true_labels.append(float(features[2]))
+                self.exampleVector.append((1,float(features[0]),float(features[1])))
+                self.trueLabels.append(float(features[2]))
             while(True):
-                previous_weigth_vector = np.copy(self.weigth_vectors)
-                for example_index in range(len(self.example_vector)):
-                    trueLabel = self.true_labels[example_index]
-                    sf_result = trueLabel * self.step_function(example_index)
-                    if sf_result <= 0:
-                        true_x_example = trueLabel * np.array(self.example_vector[example_index])
-                        np.add(self.weigth_vectors, true_x_example, out=self.weigth_vectors, casting="unsafe")
-                if (previous_weigth_vector == self.weigth_vectors).all():
+                previousWeigthVector = np.copy(self.weigthVectors)
+                for exampleIndex in range(len(self.exampleVector)):
+                    trueLabel = self.trueLabels[exampleIndex]
+                    sfResult = trueLabel * self.stepFunction(exampleIndex)
+                    if sfResult <= 0:
+                        trueXexample = trueLabel * np.array(self.exampleVector[exampleIndex])
+                        np.add(self.weigthVectors, trueXexample, out=self.weigthVectors, casting="unsafe")
+                if (previousWeigthVector == self.weigthVectors).all():
                     break
-            self.plot_examples()
+            self.plotExamples()
             self.plotPartialResult()
         else:
             print("No features provided.")
 
-    def step_function(self, example_index):
+    def stepFunction(self, exampleIndex):
         sumatory = 0
-        sumatory = np.dot(self.weigth_vectors,self.example_vector[example_index])
+        sumatory = np.dot(self.weigthVectors,self.exampleVector[exampleIndex])
         return sumatory
 
-    def solve_ecuation(self):
+    def solveEcuation(self):
         w2_vals = range(1, 11)
-        w1_vals = [(self.weigth_vectors[0] + (2*w2))/self.weigth_vectors[1] for w2 in w2_vals]
+        print(w2_vals)
+        w1_vals = [(self.weigthVectors[0] + (2*w2))/self.weigthVectors[1] for w2 in w2_vals]
         return [w1_vals, w2_vals]
 
-    def plot_examples(self):
-        for index,example in enumerate(self.example_vector):
-            if self.true_labels[index] == 1:
+    def plotExamples(self):
+        for index,example in enumerate(self.exampleVector):
+            if self.trueLabels[index] == 1:
                 plt.plot(example[1], example[2], color='blue', marker='o')
             else:
                 plt.plot(example[1], example[2], color='red', marker='o')
 
-    def plot_partial_result(self):
-        solutions = self.solve_ecuation()
+    def plotPartialResult(self):
+        solutions = self.solveEcuation()
         plt.plot(solutions[0],solutions[1])
         plt.show()
         time.sleep(1)
